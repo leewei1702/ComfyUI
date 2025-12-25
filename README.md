@@ -2,7 +2,7 @@
 
 ## Prerequisite 
 1. Install [Docker](https://www.docker.com/get-started/)
-<a href="https://www.docker.com/get-started/" target="_blank" rel=“noreferrer noopener”>Docker< /a >
+<a href="https://www.docker.com/get-started/" target="_blank" rel=“noreferrer noopener”>Docker</a>
 </br>
 
 ## Guideline for building and pushing your own ComfyUI images
