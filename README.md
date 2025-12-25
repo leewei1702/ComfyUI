@@ -24,7 +24,7 @@ docker push <image_name>
 ## Follow guide below to run the ROCm images
 
 ### 1. Install Radeon software for WSL with ROCm:
-[ROCM Installation Guide](https://rocm.docs.amd.com/projects/radeon-ryzen/en/latest/docs/install/installrad/wsl/install-radeon.html){:target="_blank"}
+[ROCM Installation Guide](https://rocm.docs.amd.com/projects/radeon-ryzen/en/latest/docs/install/installrad/wsl/install-radeon.html)
 
 ### 2. Run the docker image with the following commands:
 ```
@@ -33,4 +33,4 @@ docker run --name comfyui-rocm -it --cap-add=SYS_PTRACE --security-opt seccomp=u
 </br>
 
 ## Link for pulling down my own CUDA, ROCm, CPU images 
-[Link to my docker images](https://hub.docker.com/r/leewei1702/comfyui){:target="_blank"}
+[Link to my docker images](https://hub.docker.com/r/leewei1702/comfyui)
