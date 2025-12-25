@@ -19,6 +19,7 @@ docker build -t <image_name> .
 docker push <image_name>
 ```
 </br>
+
 ## Follow guide below to run the ROCm images
 
 ### 1. Install Radeon software for WSL with ROCm:
