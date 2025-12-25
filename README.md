@@ -2,7 +2,7 @@
 </br>
 
 ## Prerequisite 
-Install [Docker](https://www.docker.com/get-started/)
+1. Install [Docker](https://www.docker.com/get-started/)
 
 ## Guideline for building and pushing your own ComfyUI images
 Run the command below to build it, replace <image_name> with your own image name
