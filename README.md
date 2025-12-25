@@ -6,9 +6,9 @@
 
 ## Guideline for building and pushing your own ComfyUI images
 1. Navigate to one of the ComfyUI CUDA/ROCm/CPU folder that you want to build
-   - If you have Nvidia GPU, then download the ComfyUI (CUDA) folder.
-   - If you have AMD GPU, then download the ComfyUI (ROCm) folder.
-   - If you want to only use CPU, then download the ComfyUI (CPU) folder.</br>
+   - If you have Nvidia GPU, then navigate to the ComfyUI (CUDA) folder.
+   - If you have AMD GPU, then navigate to the ComfyUI (ROCm) folder.
+   - If you want to only use CPU, then navigate to the ComfyUI (CPU) folder.</br>
      (⚠️ This option is generally not recommended as CPU is slower than GPU in performing AI workloads)
 
 3. Run the command below to build it, replace <image_name> with your own image name
