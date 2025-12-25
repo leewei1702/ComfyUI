@@ -26,9 +26,9 @@ docker push <image_name>
 ### 1. Install Radeon software for WSL with ROCm:
 [ROCM Installation Guide](https://rocm.docs.amd.com/projects/radeon-ryzen/en/latest/docs/install/installrad/wsl/install-radeon.html)
 
-### 2. Run the docker image with the following commands:
+### 2. Run the docker image with the following commands (Replace the <image_name> with your own image name
 ```
-docker run --name comfyui-rocm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ipc=host --shm-size 8G --device=/dev/dxg -v /usr/lib/wsl/lib/libdxcore.so:/usr/lib/libdxcore.so -v /opt/rocm/lib/libhsa-runtime64.so.1:/opt/rocm/lib/libhsa-runtime64.so.1 -p 8188:8188 leewei1702/comfyui:amd
+docker run --name comfyui-rocm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ipc=host --shm-size 8G --device=/dev/dxg -v /usr/lib/wsl/lib/libdxcore.so:/usr/lib/libdxcore.so -v /opt/rocm/lib/libhsa-runtime64.so.1:/opt/rocm/lib/libhsa-runtime64.so.1 -p 8188:8188 <image_name>
 ```
 </br>
 
