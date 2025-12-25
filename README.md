@@ -2,6 +2,7 @@
 
 ## Prerequisite 
 1. Install [Docker](https://www.docker.com/get-started/)
+</br>
 
 ## Guideline for building and pushing your own ComfyUI images
 1. Navigate to one of the ComfyUI CUDA/ROCm/CPU folder that you want to build
@@ -17,8 +18,8 @@ docker build -t <image_name> .
 ```
 docker push <image_name>
 ```
+</br>
 ## Follow guide below to run the ROCm images
-<br/>
 
 ### 1. Install Radeon software for WSL with ROCm:
 [ROCM Installation Guide](https://rocm.docs.amd.com/projects/radeon-ryzen/en/latest/docs/install/installrad/wsl/install-radeon.html)
