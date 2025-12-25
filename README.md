@@ -30,7 +30,7 @@ docker push <image_name>
 ```
 docker run --name comfyui-rocm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ipc=host --shm-size 8G --device=/dev/dxg -v /usr/lib/wsl/lib/libdxcore.so:/usr/lib/libdxcore.so -v /opt/rocm/lib/libhsa-runtime64.so.1:/opt/rocm/lib/libhsa-runtime64.so.1 -p 8188:8188 leewei1702/comfyui:amd
 ```
+</br>
 
 ## Link for pulling down my own CUDA, ROCm, CPU images 
-
 [Link to my docker images](https://hub.docker.com/r/leewei1702/comfyui)
