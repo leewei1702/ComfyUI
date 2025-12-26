@@ -47,8 +47,7 @@ ENV IMAGES_EDIT_COMFYUI_WORKFLOW_NODES='[{"type":"image","key":"image","node_ids
 COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
 
 # Install Pytorch CUDA
-RUN pip3 uninstall -y torch torchvision torchaudio
-RUN pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+RUN pip3 install --no-cache-dir torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu128
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
