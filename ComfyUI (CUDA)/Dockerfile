@@ -48,7 +48,7 @@ COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
 
 # Install Pytorch CUDA
 RUN pip3 uninstall -y torch torchvision torchaudio
-RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu128
+RUN pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
