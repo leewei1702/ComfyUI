@@ -1,0 +1,5 @@
+Run inside WSL
+
+uv venv
+
+source .venv/bin/activate
