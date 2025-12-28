@@ -1,0 +1,24 @@
+--- Image Generation ---
+curl -X POST http://127.0.0.1:4000/v1/images/generations \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-1234" \
+  -d '{
+    "model": "stable-diffusion",
+    "prompt": "House",
+    "negative": "blurry, low quality",
+    "cfg": 12,
+    "steps": 30,
+    "seed": 122332334
+  }'
+
+
+--- Image Edit
+curl -X POST http://127.0.0.1:4000/v1/images/edits \
+  -H "Authorization: Bearer sk-1234" \
+  -F "model=stable-diffusion" \
+  -F "prompt=Anime style" \
+  -F "negative=blurry, low quality" \
+  -F "cfg=12" \
+  -F "steps=30" \
+  -F "seed=1234" \
+  -F "image=@vr.png"
