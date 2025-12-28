@@ -1,4 +1,4 @@
-# Run it inside WSL
+# How to Run Litellm
 
 ## Code
 
@@ -18,3 +18,4 @@ uv pip install litellm[proxy]
 ```
 litellm --config ./config.yaml
 ```
+
