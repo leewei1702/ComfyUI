@@ -44,9 +44,9 @@ ENV IMAGES_EDIT_COMFYUI_WORKFLOW='{"3":{"inputs":{"seed":485912478059740,"steps"
 ENV IMAGES_EDIT_COMFYUI_WORKFLOW_NODES='[{"type":"image","key":"image","node_ids":["11"]},{"type":"prompt","key":"prompt","node_ids":["6"]},{"type":"model","key":"unet_name","node_ids":["4"]},{"type":"width","key":"width","node_ids":["13"]},{"type":"height","key":"height","node_ids":["13"]}]'
 
 # Install ComfyUI Easy Use Node
-RUN git clone https://github.com/yolain/ComfyUI-Easy-Use.git ./custom_nodes/comfyui-easy-use
+RUN git clone https://github.com/yolain/ComfyUI-Easy-Use.git ./ComfyUI/custom_nodes/comfyui-easy-use
 
-RUN pip3 install --no-cache-dir -r ./custom_nodes/comfyui-easy-use/requirements.txt
+RUN pip3 install --no-cache-dir -r ./ComfyUI/custom_nodes/comfyui-easy-use/requirements.txt
 
 # Preinstall workflow
 COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
