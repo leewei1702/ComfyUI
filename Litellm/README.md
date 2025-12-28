@@ -2,10 +2,19 @@
 
 ## Code
 
-```uv venv```
+```
+uv venv
+```
 
-```source .venv/bin/activate```
+```
+source .venv/bin/activate
+```
 
-```uv pip install litellm[proxy]```
+```
+uv pip install litellm[proxy]
+```
 
-```litellm --config ./config.yaml```
+
+```
+litellm --config ./config.yaml
+```
