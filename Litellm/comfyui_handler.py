@@ -11,19 +11,16 @@ from litellm.types.utils import ImageResponse, ImageObject
 from litellm.llms.custom_httpx.http_handler import AsyncHTTPHandler
 from typing import Any, Optional, Union
 
-# --- Configuration ---
-server_address = "127.0.0.1:8188"   # ComfyUI server address
-
 # --- Queue the workflow prompt via HTTP ---
-def queue_prompt(prompt, client_id):
+def queue_prompt(prompt, client_id, api_base):
     p = {"prompt": prompt, "client_id": client_id}
     data = json.dumps(p).encode('utf-8')
-    req = urllib.request.Request("http://{}/prompt".format(server_address), data=data)
+    req = urllib.request.Request("http://{}/prompt".format(api_base), data=data)
     return json.loads(urllib.request.urlopen(req).read())
 
 # --- Receive images from ComfyUI WebSocket ---
-def get_images(ws, prompt, save_image_websocket, client_id):
-    prompt_id = queue_prompt(prompt, client_id)['prompt_id']
+def get_images(ws, prompt, save_image_websocket, client_id, api_base):
+    prompt_id = queue_prompt(prompt, client_id, api_base)['prompt_id']
     output_images = {}
     current_node = ""
     while True:
@@ -49,7 +46,17 @@ def get_images(ws, prompt, save_image_websocket, client_id):
 class ComfyUI(CustomLLM):
     
     # --- Image Generation ---
-    async def aimage_generation(self, model: str, prompt: str, model_response: ImageResponse, optional_params: dict, logging_obj: Any, timeout: Optional[Union[float, httpx.Timeout]] = None, client: Optional[AsyncHTTPHandler] = None, **kwargs) -> ImageResponse:
+    async def aimage_generation(
+            self, model: str, 
+            prompt: str, 
+            model_response: ImageResponse,
+            api_key: Optional[str],
+            api_base: Optional[str], 
+            optional_params: dict, 
+            logging_obj: Any, 
+            timeout: Optional[Union[float, httpx.Timeout]] = None, 
+            client: Optional[AsyncHTTPHandler] = None, 
+            **kwargs) -> ImageResponse:
         # --- Image generation workflow JSON ---
         image_gen_workflow_text = """
         {
@@ -186,10 +193,10 @@ class ComfyUI(CustomLLM):
         # Connect to ComfyUI WebSocket
         ws = websocket.WebSocket()
         client_id = str(uuid.uuid4())       # Unique client ID for this session
-        ws.connect("ws://{}/ws?clientId={}".format(server_address, client_id))
+        ws.connect("ws://{}/ws?clientId={}".format(api_base, client_id))
 
         # Get images from the SaveImageWebsocket node
-        images_bytes = get_images(ws, image_gen_workflow, save_image_websocket, client_id).get(save_image_websocket, [])
+        images_bytes = get_images(ws, image_gen_workflow, save_image_websocket, client_id, api_base).get(save_image_websocket, [])
         
         if not images_bytes:
             raise ValueError("No images returned")
@@ -396,10 +403,10 @@ class ComfyUI(CustomLLM):
         # Connect to ComfyUI WebSocket
         ws = websocket.WebSocket()
         client_id = str(uuid.uuid4())       # Unique client ID for this session
-        ws.connect("ws://{}/ws?clientId={}".format(server_address, client_id))
+        ws.connect("ws://{}/ws?clientId={}".format(api_base, client_id))
 
         # Get images from the SaveImageWebsocket node
-        images_bytes = get_images(ws, image_edit_workflow, save_image_websocket, client_id).get(save_image_websocket, [])
+        images_bytes = get_images(ws, image_edit_workflow, save_image_websocket, client_id, api_base).get(save_image_websocket, [])
         
         if not images_bytes:
             raise ValueError("No images returned")
