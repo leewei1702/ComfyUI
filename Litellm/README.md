@@ -1,5 +1,9 @@
 # How to Run Litellm
 
+## Prerequisite
+
+Install [uv package](https://docs.astral.sh/uv/)
+
 ## Code
 
 ```
@@ -20,4 +24,5 @@ uv pip install websocket-client
 
 ```
 litellm --config ./config.yaml
+
 ```
