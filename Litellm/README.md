@@ -1,10 +1,10 @@
-# How to Run Litellm
+# Custom API Server for image generation and image edit in Litellm
 
 ## Prerequisite
 
 Install [uv package](https://docs.astral.sh/uv/)
 
-## Code
+## Code for running this litellm
 
 ```
 uv venv
@@ -26,3 +26,4 @@ uv pip install websocket-client
 litellm --config ./config.yaml
 
 ```
+
