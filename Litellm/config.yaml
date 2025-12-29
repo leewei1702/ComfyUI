@@ -1,11 +1,9 @@
 model_list:
-  - model_name: "test-model"             
-    litellm_params:
-      model: "openai/text-embedding-ada-002"
   - model_name: "stable-diffusion"
     litellm_params:
       model: "comfyui/stable-diffusion"
       checkpoint: "stable-diffusion-v1-5-pruned.safetensors"
+      api_base: "127.0.0.1:8188"
 
 litellm_settings:
   custom_provider_map:
