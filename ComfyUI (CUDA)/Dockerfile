@@ -21,6 +21,19 @@ RUN yes | comfy model download --url https://huggingface.co/runwayml/stable-diff
 # Install Pytorch CUDA
 RUN pip3 install --no-cache-dir torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu128
 
+# Install ComfyUI Easy Use Node
+RUN git clone https://github.com/yolain/ComfyUI-Easy-Use.git ./ComfyUI/custom_nodes/comfyui-easy-use
+
+RUN pip3 install --no-cache-dir -r ./ComfyUI/custom_nodes/comfyui-easy-use/requirements.txt
+
+# Install ComfyUI Login
+COPY ./ComfyUI-Login ./ComfyUI/custom_nodes/ComfyUI-Login
+
+RUN pip3 install --no-cache-dir -r ./ComfyUI/custom_nodes/ComfyUI-Login/requirements.txt
+
+# Preinstall workflow
+COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
+
 # Open-webui Environment Variable
 ENV ENABLE_IMAGE_GENERATION=true
 
@@ -44,20 +57,7 @@ ENV IMAGE_EDIT_MODEL="stable-diffusion-v1-5-pruned.safetensors"
 
 ENV IMAGES_EDIT_COMFYUI_WORKFLOW='{"3":{"inputs":{"seed":485912478059740,"steps":20,"cfg":10,"sampler_name":"euler","scheduler":"normal","denoise":0.6,"model":["4",0],"positive":["6",0],"negative":["7",0],"latent_image":["12",0]},"class_type":"KSampler","_meta":{"title":"KSampler"}},"4":{"inputs":{"ckpt_name":"stable-diffusion-v1-5-pruned.safetensors"},"class_type":"CheckpointLoaderSimple","_meta":{"title":"Load Checkpoint"}},"6":{"inputs":{"text":"","clip":["4",1]},"class_type":"CLIPTextEncode","_meta":{"title":"CLIP Text Encode (Prompt)"}},"7":{"inputs":{"text":"text, watermark","clip":["4",1]},"class_type":"CLIPTextEncode","_meta":{"title":"CLIP Text Encode (Prompt)"}},"8":{"inputs":{"samples":["3",0],"vae":["4",2]},"class_type":"VAEDecode","_meta":{"title":"VAE Decode"}},"9":{"inputs":{"filename_prefix":"ComfyUI","images":["8",0]},"class_type":"SaveImage","_meta":{"title":"Save Image"}},"11":{"inputs":{"image":""},"class_type":"LoadImage","_meta":{"title":"Load Image"}},"12":{"inputs":{"pixels":["13",0],"vae":["4",2]},"class_type":"VAEEncode","_meta":{"title":"VAE Encode"}},"13":{"inputs":{"upscale_method":"lanczos","width":512,"height":512,"crop":"disabled","image":["11",0]},"class_type":"ImageScale","_meta":{"title":"Upscale Image"}}}'
 
-ENV IMAGES_EDIT_COMFYUI_WORKFLOW_NODES='[{"type":"image","key":"image","node_ids":["11"]},{"type":"prompt","key":"prompt","node_ids":["6"]},{"type":"model","key":"ckpt_name","node_ids":["4"]},{"type":"width","key":"width","node_ids":["13"]},{"type":"height","key":"height","node_ids":["13"]}]'
-
-# Install ComfyUI Easy Use Node
-RUN git clone https://github.com/yolain/ComfyUI-Easy-Use.git ./ComfyUI/custom_nodes/comfyui-easy-use
-
-RUN pip3 install --no-cache-dir -r ./ComfyUI/custom_nodes/comfyui-easy-use/requirements.txt
-
-# Install ComfyUI Login
-COPY ./ComfyUI-Login ./ComfyUI/custom_nodes/ComfyUI-Login
-
-RUN pip3 install --no-cache-dir -r ./ComfyUI/custom_nodes/ComfyUI-Login/requirements.txt
-
-# Preinstall workflow
-COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
+ENV IMAGES_EDIT_COMFYUI_WORKFLOW_NODES='[{"type":"image","key":"image","node_ids":["11"]},{"type":"prompt","key":"text","node_ids":["6"]},{"type":"model","key":"ckpt_name","node_ids":["4"]},{"type":"width","key":"width","node_ids":["13"]},{"type":"height","key":"height","node_ids":["13"]}]'
 
 # Set the Comfy UI API Token (Comment to randomly generate api token)
 # ENV COMFY_API_TOKEN=""
