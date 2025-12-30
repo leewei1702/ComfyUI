@@ -10,12 +10,13 @@ from litellm import CustomLLM
 from litellm.types.utils import ImageResponse, ImageObject
 from litellm.llms.custom_httpx.http_handler import AsyncHTTPHandler
 from typing import Any, Optional, Union
+from urllib.parse import urlparse
 
 # --- Queue the workflow prompt via HTTP ---
 def queue_prompt(prompt, client_id, api_base, api_key):
     p = {"prompt": prompt, "client_id": client_id}
     data = json.dumps(p).encode('utf-8')
-    req = urllib.request.Request("http://{}/prompt?token={}".format(api_base, api_key), data=data)
+    req = urllib.request.Request("{}/prompt?token={}".format(api_base, api_key), data=data)
     return json.loads(urllib.request.urlopen(req).read())
 
 # --- Receive images from ComfyUI WebSocket ---
@@ -192,13 +193,22 @@ class ComfyUI(CustomLLM):
         # Set the number of steps used in the denoising process
         image_gen_workflow["3"]["inputs"]["steps"] = optional_params.get("steps", 20)
 
+        # Set the denoise
+        image_gen_workflow["3"]["inputs"]["denoise"] = optional_params.get("denoise", 1)
+
         # Set the random seed for reproducibility
         image_gen_workflow["3"]["inputs"]["seed"] = optional_params.get("seed", 842849289)
 
         # Connect to ComfyUI WebSocket
         ws = websocket.WebSocket()
         client_id = str(uuid.uuid4())       # Unique client ID for this session
-        ws.connect("ws://{}/ws?clientId={}&token={}".format(api_base, client_id, api_key))
+        parsed_url = urlparse(api_base)
+        if parsed_url.scheme == 'http':
+            ws.connect("ws://{}/ws?clientId={}&token={}".format(parsed_url.netloc, client_id, api_key))
+        elif parsed_url.scheme == 'https':
+            ws.connect("wss://{}/ws?clientId={}&token={}".format(parsed_url.netloc, client_id, api_key))
+        else:
+            raise ValueError(f"Unsupported url scheme: {parsed_url.scheme}")
 
         # Get images from the SaveImageWebsocket node
         images_bytes = get_images(ws, image_gen_workflow, save_image_websocket, client_id, api_base, api_key).get(save_image_websocket, [])
@@ -406,13 +416,22 @@ class ComfyUI(CustomLLM):
         # Set the number of steps used in the denoising process
         image_edit_workflow["3"]["inputs"]["steps"] = optional_params.get("steps", 20)
 
+        # Set the denoise
+        image_edit_workflow["3"]["inputs"]["denoise"] = optional_params.get("denoise", 0.6)
+
         # Set the random seed for reproducibility
         image_edit_workflow["3"]["inputs"]["seed"] = optional_params.get("seed", 842849289)
 
         # Connect to ComfyUI WebSocket
         ws = websocket.WebSocket()
         client_id = str(uuid.uuid4())       # Unique client ID for this session
-        ws.connect("ws://{}/ws?clientId={}&token={}".format(api_base, client_id, api_key))
+        parsed_url = urlparse(api_base)
+        if parsed_url.scheme == 'http':
+            ws.connect("ws://{}/ws?clientId={}&token={}".format(parsed_url.netloc, client_id, api_key))
+        elif parsed_url.scheme == 'https':
+            ws.connect("wss://{}/ws?clientId={}&token={}".format(parsed_url.netloc, client_id, api_key))
+        else:
+            raise ValueError(f"Unsupported url scheme: {parsed_url.scheme}")
 
         # Get images from the SaveImageWebsocket node
         images_bytes = get_images(ws, image_edit_workflow, save_image_websocket, client_id, api_base, api_key).get(save_image_websocket, [])

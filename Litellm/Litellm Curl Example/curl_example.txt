@@ -10,7 +10,8 @@ curl -X POST http://127.0.0.1:4000/v1/images/generations \
     "negative": "blurry, low quality",
     "cfg": 12,
     "steps": 20,
-    "seed": 122332334
+    "seed": 122332334,
+    "denoise": 1
   }'
 
 
@@ -25,4 +26,5 @@ curl -X POST http://127.0.0.1:4000/v1/images/edits \
   -F "cfg=12" \
   -F "steps=30" \
   -F "seed=1234" \
-  -F "image=@vr.png"
+  -F "image=@vr.png" \
+  -F "denoise=0.6"
