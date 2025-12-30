@@ -47,7 +47,8 @@ class ComfyUI(CustomLLM):
     
     # --- Image Generation ---
     async def aimage_generation(
-            self, model: str, 
+            self, 
+            model: str, 
             prompt: str, 
             model_response: ImageResponse,
             api_key: Optional[str],
@@ -180,6 +181,10 @@ class ComfyUI(CustomLLM):
 
         # Set the negative text prompt
         image_gen_workflow["7"]["inputs"]["text"] = optional_params.get("negative", "")
+
+        # Set the width and height for the image generated
+        image_gen_workflow["15"]["inputs"]["width"] = optional_params.get("width", 512)
+        image_gen_workflow["15"]["inputs"]["height"] = optional_params.get("height", 512)
 
         # Set the Classifier-Free Guidance to balance creativity and adherence to the prompt
         image_gen_workflow["3"]["inputs"]["cfg"] = optional_params.get("cfg", 10)
@@ -381,15 +386,19 @@ class ComfyUI(CustomLLM):
         # Set the model file name
         image_edit_workflow["4"]["inputs"]["ckpt_name"] = optional_params.get("checkpoint", "")
 
-        # Set the positive text prompt
-        image_edit_workflow["6"]["inputs"]["text"] = prompt
-
         # Set the image
         buffer = image[0]
         image_edit_workflow["18"]["inputs"]["base64_data"] = base64.b64encode(buffer.getvalue()).decode("utf-8")
 
+        # Set the positive text prompt
+        image_edit_workflow["6"]["inputs"]["text"] = prompt
+
         # Set the negative text prompt
         image_edit_workflow["7"]["inputs"]["text"] = optional_params.get("negative", "")
+
+        # Set the width and height for the image generated
+        image_gen_workflow["13"]["inputs"]["width"] = optional_params.get("width", 512)
+        image_gen_workflow["13"]["inputs"]["height"] = optional_params.get("height", 512)
 
         # Set the Classifier-Free Guidance to balance creativity and adherence to the prompt
         image_edit_workflow["3"]["inputs"]["cfg"] = optional_params.get("cfg", 10)
