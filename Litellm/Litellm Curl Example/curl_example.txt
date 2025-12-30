@@ -5,6 +5,8 @@ curl -X POST http://127.0.0.1:4000/v1/images/generations \
   -d '{
     "model": "stable-diffusion",
     "prompt": "House",
+    "width": 1024,
+    "height": 1024,
     "negative": "blurry, low quality",
     "cfg": 12,
     "steps": 20,
@@ -17,6 +19,8 @@ curl -X POST http://127.0.0.1:4000/v1/images/edits \
   -H "Authorization: Bearer sk-1234" \
   -F "model=stable-diffusion" \
   -F "prompt=Anime style" \
+  -F "width=512" \
+  -F "height=512" \
   -F "negative=blurry, low quality" \
   -F "cfg=12" \
   -F "steps=30" \

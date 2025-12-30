@@ -397,8 +397,8 @@ class ComfyUI(CustomLLM):
         image_edit_workflow["7"]["inputs"]["text"] = optional_params.get("negative", "")
 
         # Set the width and height for the image generated
-        image_gen_workflow["13"]["inputs"]["width"] = optional_params.get("width", 512)
-        image_gen_workflow["13"]["inputs"]["height"] = optional_params.get("height", 512)
+        image_edit_workflow["13"]["inputs"]["width"] = optional_params.get("width", 512)
+        image_edit_workflow["13"]["inputs"]["height"] = optional_params.get("height", 512)
 
         # Set the Classifier-Free Guidance to balance creativity and adherence to the prompt
         image_edit_workflow["3"]["inputs"]["cfg"] = optional_params.get("cfg", 10)
