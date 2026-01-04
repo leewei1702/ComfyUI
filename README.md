@@ -50,3 +50,8 @@ docker pull leewei1702/comfyui:amd
 docker pull leewei1702/comfyui:cpu
 ```
 
+## Help
+### If you are facing with the following issues
+1. exec /start.sh: no such file or directory
+   Solution: You may need to change the /start.sh from CRLF to LF line endings before building it
+
