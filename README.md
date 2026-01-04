@@ -2,7 +2,7 @@
 
 ## Prerequisite 
 1. Install [Docker](https://www.docker.com/get-started/)
-</br>
+<br>
 
 ## Guideline for building and pushing your own ComfyUI images
 1. Navigate to one of the ComfyUI CUDA/ROCm/CPU folder that you want to build
@@ -11,7 +11,7 @@
    - If you want to only use CPU, then navigate to the ComfyUI (CPU) folder.</br>
      (⚠️ This option is generally not recommended as CPU is slower than GPU in performing AI workloads)
 
-3. Run the command below to build it, replace <image_name> with your own image name
+2. Run the command below to build it, replace <image_name> with your own image name
 ```
 docker build -t <image_name> .
 ```
@@ -19,7 +19,7 @@ docker build -t <image_name> .
 ```
 docker push <image_name>
 ```
-</br>
+<br>
 
 ## Follow guide below to run the ROCm images
 
@@ -30,7 +30,7 @@ docker push <image_name>
 ```
 docker run --name comfyui-rocm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --ipc=host --shm-size 8G --device=/dev/dxg -v /usr/lib/wsl/lib/libdxcore.so:/usr/lib/libdxcore.so -v /opt/rocm/lib/libhsa-runtime64.so.1:/opt/rocm/lib/libhsa-runtime64.so.1 -p 8188:8188 <image_name>
 ```
-</br>
+<br>
 
 ## My own CUDA, ROCm, CPU images 
 [Link to my ComfyUI images](https://hub.docker.com/r/leewei1702/comfyui)
@@ -49,6 +49,7 @@ docker pull leewei1702/comfyui:amd
 ```
 docker pull leewei1702/comfyui:cpu
 ```
+<br>
 
 ## Help
 ### If you are facing with the following issues
