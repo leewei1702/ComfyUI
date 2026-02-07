@@ -16,7 +16,7 @@ RUN yes | comfy --here install
 RUN yes | comfy model download --url https://huggingface.co/runwayml/stable-diffusion-v1-5/resolve/main/v1-5-pruned.safetensors --filename stable-diffusion-v1-5-pruned.safetensors --relative-path models/checkpoints
 
 # Install Pytorch CUDA
-RUN pip3 install --no-cache-dir torch==2.7.1 torchvision==0.22.1 torchaudio==2.7.1 --index-url https://download.pytorch.org/whl/cu128
+RUN pip3 install --no-cache-dir torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
 
 # Install ComfyUI Easy Use Node
 RUN git clone https://github.com/yolain/ComfyUI-Easy-Use.git ./ComfyUI/custom_nodes/comfyui-easy-use
@@ -33,6 +33,10 @@ COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
 
 # Set the Comfy UI API Token (Comment to randomly generate api token)
 # ENV COMFY_API_TOKEN=""
+
+# Set the Comfy UI Login Username and Password (Comment to prompt for register page)
+# ENV COMFY_USERNAME=""
+# ENV COMFY_PASSWORD=""
 
 COPY start.sh /start.sh
 RUN chmod +x /start.sh

@@ -42,6 +42,10 @@ COPY ./ComfyUI_Workflow/*.json /ComfyUI/user/default/workflows/
 # Set the Comfy UI API Token (Comment to randomly generate api token)
 # ENV COMFY_API_TOKEN=""
 
+# Set the Comfy UI Login Username and Password (Comment to prompt for register page)
+# ENV COMFY_USERNAME=""
+# ENV COMFY_PASSWORD=""
+
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 

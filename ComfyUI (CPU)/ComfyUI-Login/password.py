@@ -22,6 +22,8 @@ api_token_path = os.path.join(node_dir, '.api-token.txt')
 login_html_path = os.path.join(node_dir, "login.html")
 KEY_AGE_LIMIT = timedelta(days=30)  # Key expiration period
 TOKEN = os.environ.get("COMFY_API_TOKEN")
+USERNAME = os.environ.get("COMFY_USERNAME")
+PASSWORD = os.environ.get("COMFY_PASSWORD")
 
 # Global cache dictionary
 user_cache = {}
@@ -183,7 +185,7 @@ def load_token():
     TOKEN = secrets.token_hex(16)
     with open(api_token_path, "w") as f:
         f.write(TOKEN)
-    logging.info(f"Generated and recorded new token: {TOKEN}")
+    logging.info(f"Randomly generated api token and recorded it")
 
 
 if not os.path.exists(os.path.dirname(password_path)):
@@ -195,6 +197,13 @@ if not os.path.exists(os.path.dirname(password_path)):
 old_password_path = os.path.join(comfy_dir, "PASSWORD")
 if os.path.exists(old_password_path):
     os.rename(old_password_path, password_path)
+
+# If username and password is set in environment variables, write to file
+if USERNAME and PASSWORD and not os.path.exists(password_path):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(PASSWORD.encode('utf-8'), salt)
+    with open(password_path, "wb") as file:
+        file.write(hashed_password + b'\n' + USERNAME.encode('utf-8'))
 
 load_token()
 
