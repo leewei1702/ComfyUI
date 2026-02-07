@@ -37,11 +37,11 @@ docker run --name comfyui-rocm -it --cap-add=SYS_PTRACE --security-opt seccomp=u
 </br>
 
 ## Run one of the command below to pull my ComfyUI images
-### CUDA
+### CUDA 12.8
 ```
 docker pull leewei1702/comfyui:cuda
 ```
-### ROCm
+### ROCm 6.4.2
 ```
 docker pull leewei1702/comfyui:amd
 ```
