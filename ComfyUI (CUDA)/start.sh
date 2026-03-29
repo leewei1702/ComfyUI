@@ -1,3 +1,0 @@
-#!/bin/bash
-
-comfy launch -- --listen 0.0.0.0

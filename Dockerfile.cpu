@@ -1,0 +1,49 @@
+FROM python:3.11
+
+WORKDIR /ComfyUI
+
+RUN apt-get update && apt-get install -y \
+  git \
+  wget \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+
+# Install ComfyUI
+RUN git clone https://github.com/comfyanonymous/ComfyUI.git .
+
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Install ComfyUI Easy Use Node
+RUN git clone https://github.com/yolain/ComfyUI-Easy-Use.git custom_nodes/comfyui-easy-use
+
+RUN pip3 install --no-cache-dir -r custom_nodes/comfyui-easy-use/requirements.txt
+
+# Install ComfyUI Login
+COPY custom_nodes/ComfyUI-Login custom_nodes/ComfyUI-Login
+
+RUN pip3 install --no-cache-dir -r custom_nodes/ComfyUI-Login/requirements.txt
+
+# Install ComfyUI Manager
+RUN git clone https://github.com/Comfy-Org/ComfyUI-Manager.git custom_nodes/comfyui-manager
+
+RUN pip3 install --no-cache-dir -r custom_nodes/comfyui-manager/requirements.txt
+
+# Install SaveVideoWebsocket Node
+COPY custom_nodes/websocket_video_save.py custom_nodes/websocket_video_save.py
+
+# Install SaveAudioWebsocket Node
+COPY custom_nodes/websocket_audio_save.py custom_nodes/websocket_audio_save.py
+
+# Preinstall workflow
+COPY workflows/*.json user/default/workflows/
+
+# Set the Comfy UI API Token (Comment to randomly generate api token)
+# ENV COMFY_API_TOKEN=""
+
+# Set the Comfy UI Login Username and Password (Comment to prompt for register page)
+# ENV COMFY_USERNAME=""
+# ENV COMFY_PASSWORD=""
+
+EXPOSE 8188
+
+CMD ["python3", "main.py", "--cpu", "--listen", "0.0.0.0"]
